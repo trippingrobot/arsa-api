@@ -18,4 +18,6 @@ class Router(object):
         return decorator
 
     def serve(self, route, **kwargs):
+        # TODO: Error handling
+        # TODO: Logging
         self.routes.get(route)(**kwargs)
