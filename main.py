@@ -1,7 +1,12 @@
+""" Main """
 
 from api.router import Router
 
-# TODO: Logging
-def handler(event, context):
+def handler(event, _):
+    """ Lambda handler for incoming requests. Will route
+        event data based upon the 'route' parameter.
+
+        {'route':'service.method'}
+    """
     router = Router()
-    router.serve(**event)
+    return router.serve(**event)

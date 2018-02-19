@@ -1,2 +1,4 @@
 python-lambda-local
 boto3
+pytest
+pylint
