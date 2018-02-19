@@ -1,3 +1,4 @@
+public/
 venv/
 *.pyc
 .pytest_cache/

@@ -1,4 +1,5 @@
 python-lambda-local
 boto3
+pynamodb
 pytest
 pylint
