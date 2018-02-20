@@ -1,3 +1,4 @@
+""" Model Utility package """
 import os
 
 def meta_classwrapper(cls):
@@ -14,14 +15,19 @@ def meta_classwrapper(cls):
 
 
 class Immutable(object):
-    """docstring for Sanitize."""
+    """docstring for Immutable."""
+
     immutable_attributes = []
 
-    def is_immutable(self, attribute):
-        return attribute in self.immutable_attributes
+    @classmethod
+    def is_immutable(cls, attribute):
+        """ Return if attribute name is immutable """
+        return attribute in cls.immutable_attributes
 
-    def sanitize_attributes(self, attributes):
-        for attr in self.immutable_attributes:
-            if attr in attributes:
-                attributes.pop(attr)
-        return attributes
+    @classmethod
+    def mutable_actions(cls, attributes):
+        """ return list of filtered update actions """
+        update_actions = [getattr(cls, k).set(v)
+                          for k, v in attributes.items()
+                          if cls.is_immutable(k) is False]
+        return update_actions

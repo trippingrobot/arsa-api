@@ -17,9 +17,8 @@ def get_pool(account_id, pool_id):
 def update_pool(account_id, pool_id, **kwargs):
     """ Update pool by pool_id """
     pool = PoolModel.get(account_id, pool_id)
-    attributes = pool.sanitize_attributes(kwargs)
 
-    mapped_attrs = {name: {'value':val, 'action':'PUT'} for name, val in attributes.items()}
-    pool.update(mapped_attrs)
+    # update data pool by sending only mutable actions, ingoring immutable attributes
+    pool.update(actions=PoolModel.mutable_actions(kwargs))
 
     return pool
