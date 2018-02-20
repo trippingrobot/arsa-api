@@ -22,3 +22,21 @@ def update_pool(account_id, pool_id, **kwargs):
     pool.update(actions=PoolModel.mutable_actions(kwargs))
 
     return pool
+
+@Router.route("pools.drop")
+def drop_pool(account_id, pool_id):
+    """ Get pool by pool_id """
+    PoolModel.get(account_id, pool_id).delete()
+
+@Router.route("pools.create")
+def create_pool(account_id, **kwargs):
+    """ Create a data pool with account id """
+    sanitized = PoolModel.sanitize_immutable_attrs(kwargs)
+    pool = PoolModel(account_id=account_id, **sanitized)
+
+    # Pool must be saved before Athena table can be created
+    pool.save()
+
+    # TODO: Create Athena table with namespace "env.account_id.pool_id"
+
+    return pool

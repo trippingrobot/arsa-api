@@ -3,6 +3,12 @@ import pytest # pylint: disable=unused-import
 
 from api.models.pool import PoolModel
 
+def test_required_attes():
+    pool = PoolModel(pool_id="1", account_id="1a")
+
+    with pytest.raises(ValueError):
+        pool.save()
+
 def test_readonly_attrs():
     pool = PoolModel(pool_id="1", account_id="1a", name="Foo")
 
