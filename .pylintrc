@@ -1,0 +1,8 @@
+[MASTER]
+
+# Specify a configuration file.
+#rcfile=
+
+# Add files or directories to the blacklist. They should be base names, not
+# paths.
+ignore=test
