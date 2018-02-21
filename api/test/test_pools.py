@@ -5,6 +5,9 @@ import api.pools as Pool
 from api.models.pool import PoolModel
 from api.models.attributes import (FieldAttribute, TaxonomyAttribute)
 
+from .mocks.athena import mock_athena
+from moto import mock_dynamodb2
+
 @pytest.fixture(scope='function')
 def db_setup(request):
     """ setup database """
@@ -43,6 +46,8 @@ def test_delete_pool():
     with pytest.raises(Exception):
         Pool.get_pool("1a", "1")
 
+@mock_athena
+@mock_dynamodb2
 def test_create_pool():
     """ create pool by accounnt id and name"""
     req = {

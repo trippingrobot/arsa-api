@@ -1,6 +1,7 @@
 """ Pools Service """
-from api.router import Router
+import boto3
 
+from api.router import Router
 from api.models.pool import PoolModel
 
 @Router.route("pools.list")
@@ -37,6 +38,8 @@ def create_pool(account_id, **kwargs):
     # Pool must be saved before Athena table can be created
     pool.save()
 
+    client = boto3.client('athena')
+    client.start_query_execution(QueryStrin='CREATE')
     # TODO: Create Athena table with namespace "env.account_id.pool_id"
 
     return pool
